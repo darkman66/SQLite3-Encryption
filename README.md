@@ -179,21 +179,22 @@ use as usual
 
 To compile on unix like system (MacOS or Linux) just do below
 
-    cd src
+```bash
+cd src
 
 
-    gcc -Os -I. -DSQLITE_THREADSAFE=0 -DSQLITE_ENABLE_FTS4 -DSQLITE_HAS_CODEC \
-        -DSQLITE_ENABLE_FTS5 -DSQLITE_ENABLE_JSON1 \
-        -DSQLITE_ENABLE_RTREE -DSQLITE_ENABLE_EXPLAIN_COMMENTS \
-        -DHAVE_USLEEP -DHAVE_READLINE \
-        shell.c sqlite3secure.c -ldl -lreadline -lncurses -o sqlite3
-
+gcc -Os -I. -DSQLITE_THREADSAFE=0 -DSQLITE_ENABLE_FTS4 -DSQLITE_HAS_CODEC \
+    -DSQLITE_ENABLE_FTS5 -DSQLITE_ENABLE_JSON1 \
+    -DSQLITE_ENABLE_RTREE -DSQLITE_ENABLE_EXPLAIN_COMMENTS \
+    -DHAVE_USLEEP -DHAVE_READLINE \
+    shell.c sqlite3secure.c -ldl -lreadline -lncurses -o sqlite3
+```
 
 Once it's compile you should have file executable file `sqlite3`.
 
 Showing help will not tell you any difference comparing to standard sqlite3 shell client
 
-```
+```bash
 ./sqlite3 -help
 Usage: ./sqlite3 [OPTIONS] FILENAME [SQL]
 FILENAME is the name of an SQLite database. A new database is created
@@ -233,24 +234,26 @@ Let's start clean database
 
 Enable encryption key to be used (1st time)
 
-    PRAGMA rekey='passphrase';
+```sql
+PRAGMA rekey='passphrase';
+```
 
 Now create example table
 
 ```sql
-    CREATE TABLE IF NOT EXISTS user (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT UNIQUE NOT NULL);
+CREATE TABLE IF NOT EXISTS user (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT UNIQUE NOT NULL);
 ```
 
 Insert some sample data
 
 ```sql
-    insert into user (username) values ('sdfsdf');
+insert into user (username) values ('sdfsdf');
 ```
 
 Let's check if we can get data
 
 ```sql
-    SELECT * from user;
+SELECT * from user;
 ```
 
 Now exit from shell client and reconnect.
@@ -262,7 +265,9 @@ Check data again and...booom! It's encrypted :)
 
 This is what we wanted to see, right? Now give engine our secret key.
 
-    PRAGMA key='passphrase';
+```sql
+PRAGMA key='passphrase';
+```
 
 and again get data ....
 
