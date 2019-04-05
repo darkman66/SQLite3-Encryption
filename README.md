@@ -173,6 +173,107 @@ use as usual
 - [wxsqlite3-source]
 - [wxsqlite3-docs]
 
+# Unix
+
+## Compile
+
+To compile on unix like system (MacOS or Linux) just do below
+
+    cd src
+
+
+    gcc -Os -I. -DSQLITE_THREADSAFE=0 -DSQLITE_ENABLE_FTS4 -DSQLITE_HAS_CODEC \
+        -DSQLITE_ENABLE_FTS5 -DSQLITE_ENABLE_JSON1 \
+        -DSQLITE_ENABLE_RTREE -DSQLITE_ENABLE_EXPLAIN_COMMENTS \
+        -DHAVE_USLEEP -DHAVE_READLINE \
+        shell.c sqlite3secure.c -ldl -lreadline -lncurses -o sqlite3
+```
+
+Once it's compile you should have file executable file `sqlite3`.
+
+Showing help will not tell you any difference comparing to standard sqlite3 shell client
+
+
+./sqlite3 -help
+Usage: ./sqlite3 [OPTIONS] FILENAME [SQL]
+FILENAME is the name of an SQLite database. A new database is created
+if the file does not previously exist.
+OPTIONS include:
+   -ascii               set output mode to 'ascii'
+   -bail                stop after hitting an error
+   -batch               force batch I/O
+   -column              set output mode to 'column'
+   -cmd COMMAND         run "COMMAND" before reading stdin
+   -csv                 set output mode to 'csv'
+   -echo                print commands before execution
+   -init FILENAME       read/process named file
+   -[no]header          turn headers on or off
+   -help                show this message
+   -html                set output mode to HTML
+   -interactive         force interactive I/O
+   -line                set output mode to 'line'
+   -list                set output mode to 'list'
+   -lookaside SIZE N    use N entries of SZ bytes for lookaside memory
+   -mmap N              default mmap size set to N
+   -newline SEP         set output row separator. Default: '\n'
+   -nullvalue TEXT      set text string for NULL values. Default ''
+   -pagecache SIZE N    use N slots of SZ bytes each for page cache memory
+   -scratch SIZE N      use N slots of SZ bytes each for scratch memory
+   -separator SEP       set output column separator. Default: '|'
+   -stats               print memory stats before each finalize
+   -version             show SQLite version
+   -vfs NAME            use NAME as the default VFS
+
+## Usage
+
+Let's start clean database
+
+    ./sqlite3 /var/tmp/db1
+
+Enable encryption key to be used (1st time)
+
+    PRAGMA rekey='passphrase';
+
+Now create example table
+
+    CREATE TABLE IF NOT EXISTS user (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT UNIQUE NOT NULL);
+
+Insert some sample data
+
+    insert into user (username) values ('sdfsdf');
+
+Let's check if we can get data
+
+    SELECT * from user;
+
+Now exit from shell client and reconnect.
+
+Check data again and...booom! It's encrypted :)
+
+    sqlite> SELECT * from user;
+    Error: file is encrypted or is not a database
+
+This is what we wanted to see, right? Now give engine our secret key.
+
+    PRAGMA key='passphrase';
+
+and again get data ....
+
+
+    sqlite> PRAGMA key='passphrase';
+    sqlite> SELECT * from user;
+     1|sdfsdf
+    sqlite>
+
+Igor! It's alive!
+
+## Traps
+
+You have to give pragma key *after* connecting to DB. Don't make *any* query yet. Just first key then make queries. If you miss order you will see error about data encryption.
+
+
+
+
 [sqlcipher-api]: https://sqlcipher.net/sqlcipher-api/ "SQLCipher API"
 [wxsqlite3]: https://utelle.github.io/wxsqlite3 "wxSQLite3 Homepage"
 [wxsqlite3-source]: https://github.com/utelle/wxsqlite3 "wxSQLite3 Source Code"
