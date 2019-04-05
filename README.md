@@ -187,13 +187,13 @@ To compile on unix like system (MacOS or Linux) just do below
         -DSQLITE_ENABLE_RTREE -DSQLITE_ENABLE_EXPLAIN_COMMENTS \
         -DHAVE_USLEEP -DHAVE_READLINE \
         shell.c sqlite3secure.c -ldl -lreadline -lncurses -o sqlite3
-```
+
 
 Once it's compile you should have file executable file `sqlite3`.
 
 Showing help will not tell you any difference comparing to standard sqlite3 shell client
 
-
+```
 ./sqlite3 -help
 Usage: ./sqlite3 [OPTIONS] FILENAME [SQL]
 FILENAME is the name of an SQLite database. A new database is created
@@ -223,6 +223,7 @@ OPTIONS include:
    -stats               print memory stats before each finalize
    -version             show SQLite version
    -vfs NAME            use NAME as the default VFS
+```
 
 ## Usage
 
@@ -236,15 +237,21 @@ Enable encryption key to be used (1st time)
 
 Now create example table
 
+```sql
     CREATE TABLE IF NOT EXISTS user (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT UNIQUE NOT NULL);
+```
 
 Insert some sample data
 
+```sql
     insert into user (username) values ('sdfsdf');
+```
 
 Let's check if we can get data
 
+```sql
     SELECT * from user;
+```
 
 Now exit from shell client and reconnect.
 
@@ -272,7 +279,7 @@ Igor! It's alive!
 You have to give pragma key *after* connecting to DB. Don't make *any* query yet. Just first key then make queries. If you miss order you will see error about data encryption.
 
 
-
+# More
 
 [sqlcipher-api]: https://sqlcipher.net/sqlcipher-api/ "SQLCipher API"
 [wxsqlite3]: https://utelle.github.io/wxsqlite3 "wxSQLite3 Homepage"
