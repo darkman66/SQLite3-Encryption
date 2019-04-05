@@ -286,9 +286,11 @@ You have to give pragma key *after* connecting to DB. Don't make *any* query yet
 
 # More
 
-[sqlcipher-api]: https://sqlcipher.net/sqlcipher-api/ "SQLCipher API"
-[wxsqlite3]: https://utelle.github.io/wxsqlite3 "wxSQLite3 Homepage"
-[wxsqlite3-source]: https://github.com/utelle/wxsqlite3 "wxSQLite3 Source Code"
-[wxsqlite3-docs]: https://utelle.github.io/wxsqlite3/docs/html/index.html "wxSQLite3 Docs"
-[wxsqlite3-dl]: https://github.com/utelle/wxsqlite3/releases "wxSQLite3 Download"
+Read some more
+
+[sqlcipher-api](https://sqlcipher.net/sqlcipher-api/) SQLCipher API
+[wxsqlite3](https://utelle.github.io/wxsqlite3) wxSQLite3 Homepage
+[wxsqlite3-source](https://github.com/utelle/wxsqlite3) wxSQLite3 Source Code
+[wxsqlite3-docs](https://utelle.github.io/wxsqlite3/docs/html/index.html) wxSQLite3 Docs
+[wxsqlite3-dl](https://github.com/utelle/wxsqlite3/releases) wxSQLite3 Download
 [repo-dl]: https://github.com/rindeal/SQLite3-Encryption/archive/master.zip "Download repository"
